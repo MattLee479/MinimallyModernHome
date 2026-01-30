@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimally Modern Home | Curated Interior Design Inspiration</title>
+  <meta name="description" content="Discover thoughtfully designed interiors and curated home decor that bring peace and beauty to everyday living.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/house.ico">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Minimally Modern Home">
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="rooms.html" class="nav-link">Rooms</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html" class="mobile-nav-link active">Home</a>
+    <a href="rooms.html" class="mobile-nav-link">Rooms</a>
+    <a href="contact.html" class="mobile-nav-link">Contact</a>
+    <a href="disclaimer.html" class="mobile-nav-link">Disclaimer</a>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="assets/hero-living-room.jpg" alt="Beautiful minimalist living room" class="hero-image">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="container">
+          <div class="hero-text animate-fade-in">
+            <h1>Curated Spaces, Calm Living</h1>
+            <p>Discover thoughtfully designed interiors that bring peace and beauty to everyday life.</p>
+            <a href="rooms.html" class="btn btn-primary">View The Rooms</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Latest Posts Section -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Latest Inspiration</h2>
+
+    <!-- ✅ add id so JS can inject cards -->
+    <div class="posts-grid" id="latestPostsGrid"></div>
+  </div>
+</section>
+
+    <!-- Trust Block Section -->
+    <section class="section section-linen">
+      <div class="container">
+        <h2 class="section-title">Why Trust Our Curation</h2>
+        <div class="trust-grid">
+          <div class="trust-item animate-fade-in">
+            <h3>Curated with Care</h3>
+            <p>Every piece we recommend is personally selected for quality, style, and timeless appeal.</p>
+          </div>
+          <div class="trust-item animate-fade-in" style="animation-delay: 0.1s;">
+            <h3>Transparent & Honest</h3>
+            <p>We clearly disclose affiliate partnerships. Your trust matters more than any commission.</p>
+          </div>
+          <div class="trust-item animate-fade-in" style="animation-delay: 0.2s;">
+            <h3>Design-First Approach</h3>
+            <p>We prioritize aesthetics and functionality, never promoting products just for profit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote CTA Section -->
+    <section class="section">
+      <div class="container">
+        <div class="quote-cta">
+          <blockquote>"Your home should tell the story of who you are, and be a collection of what you love."</blockquote>
+          <p class="quote-author">— Nate Berkus</p>
+          <a href="contact.html" class="btn btn-secondary">Get In Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Minimally Modern Home</h4>
+        <p>Home Inspiration Page</p>
+
+        <img
+          src="assets/hero-living-room.jpg"
+          alt="Minimally Modern Home"
+          class="footer-photo--below"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <div class="footer-links">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rooms.html">Rooms</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-connect">
+        <h5>Connect With Me</h5>
+        <div class="social-buttons">
+          <a href="https://" target="_blank" rel="noopener noreferrer" class="social-btn pinterest">
+            View My Pinterest
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="copyright-year"></span> Minimally Modern Home. All rights reserved.</p>
+
+      <div class="company-logo">
+        <span>Website made by</span>
+        <a href="https://solarisai.co.uk" target="_blank" rel="noopener noreferrer" class="company-logo-link">
+          <img
+            src="assets/solarisai.webp"
+            alt="SolarisAI"
+            class="company-logo-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <p class="toast-title">Coming Soon</p>
+    <p class="toast-message"></p>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

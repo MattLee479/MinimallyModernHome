@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Minimally Modern Home</title>
+  <meta name="description" content="Have a question or just want to say hello? We'd love to hear from you.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" href="/assets/house.ico">
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="Minimally Modern Home">
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="rooms.html" class="nav-link">Rooms</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html" class="mobile-nav-link">Home</a>
+    <a href="rooms.html" class="mobile-nav-link">Rooms</a>
+    <a href="contact.html" class="mobile-nav-link active">Contact</a>
+    <a href="disclaimer.html" class="mobile-nav-link">Disclaimer</a>
+  </nav>
+
+  <main>
+    <section class="section section-linen">
+      <div class="container">
+        <div class="contact-wrapper">
+          <div class="page-header">
+            <h1>Get In Touch</h1>
+            <p>Have a question or just want to say hello? We'd love to hear from you.</p>
+          </div>
+
+          <form class="contact-form animate-fade-in" id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          </form>
+
+          <div class="success-message animate-fade-in" id="successMessage" style="display: none;">
+            <h2>Thank You</h2>
+            <p>Your message has been sent. We'll get back to you soon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Minimally Modern Home</h4>
+        <p>Home Inspiration Page</p>
+
+        <img
+          src="assets/hero-living-room.jpg"
+          alt="Minimally Modern Home"
+          class="footer-photo--below"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <div class="footer-links">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rooms.html">Rooms</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="disclaimer.html">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-connect">
+        <h5>Connect With Me</h5>
+        <div class="social-buttons">
+          <a href="https://" target="_blank" rel="noopener noreferrer" class="social-btn pinterest">
+            View My Pinterest
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="copyright-year"></span> Minimally Modern Home. All rights reserved.</p>
+
+      <div class="company-logo">
+        <span>Website made by</span>
+        <a href="https://solarisai.co.uk" target="_blank" rel="noopener noreferrer" class="company-logo-link">
+          <img
+            src="assets/solarisai.webp"
+            alt="SolarisAI"
+            class="company-logo-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <p class="toast-title">Coming Soon</p>
+    <p class="toast-message"></p>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
