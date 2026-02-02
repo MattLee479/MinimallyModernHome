@@ -69,38 +69,164 @@ a {
   color: inherit;
 }
 
-/* ===== Affiliate Products ===== */
+/* ========================================
+   AFFILIATE LINKS (Simple chevron list)
+   ======================================== */
+
 .product-section {
   margin-top: 10px;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-top: 14px;
+/* =====================================================
+   Affiliate links – minimal divider rows (no box sides)
+   ===================================================== */
+
+/* Container list: remove default UL bullets + spacing */
+.affiliate-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
 }
 
-.product-card {
+/* Each LI */
+.affiliate-item{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* The clickable row */
+.affiliate-link{
   display: flex;
-  justify-content: space-between;
-  gap: 14px;
   align-items: center;
-  padding: 14px 14px;
-  background: #f6f4f0;
-  border: 1px solid #e5e3df;
+  justify-content: space-between;
+
+  padding: 14px 12px;
+  text-decoration: none;
+
+  /* ✅ only top/bottom dividers (no left/right box) */
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+
+  background: transparent;
+  box-shadow: none;
 }
 
-.product-name {
+/* Top divider on the first row so it feels like a list */
+.affiliate-item:first-child .affiliate-link{
+  border-top: 1px solid rgba(0,0,0,0.25);
+}
+
+/* Name + custom bullet */
+.affiliate-name{
+  position: relative;        /* required for ::before bullet */
+  padding-left: 18px;        /* bullet sits inside the row */
   font-weight: 600;
+  color: var(--color-ink);
 }
 
-.product-note {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  margin-top: 4px;
+/* ✅ Deep black bullet (no transparency) */
+.affiliate-name::before{
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;               /* deep black */
+  font-size: 16px;
+  line-height: 1;
 }
 
+/* Right chevron */
+.affiliate-chevron{
+  color: rgba(0,0,0,0.35);
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Hover: subtle underline only */
+.affiliate-link:hover{
+  background: transparent;
+}
+
+.affiliate-link:hover .affiliate-name{
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+
+/* ========================================
+   Pinterest overlay badge (image version)
+   ======================================== */
+
+.post-hero-image {
+  position: relative;
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.post-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* link wrapper behaves like div */
+a.post-hero-image {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* badge container */
+.pin-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+  backdrop-filter: blur(6px);
+
+  pointer-events: none; /* click goes through to link */
+}
+
+/* the pinterest.webp inside */
+.pin-badge-img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.pin-link:hover .pin-badge {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.22);
+}
+
+@media (max-width: 480px) {
+  .pin-badge {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  .pin-badge-img {
+    width: 16px;
+    height: 16px;
+  }
+}
 .post-card-link {
   display: block;
   color: inherit;
@@ -1020,7 +1146,6 @@ body.room-page .section {
   display: block;
   object-fit: contain;
 }
-
 
 /* ========================================
    ANIMATIONS

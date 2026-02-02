@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       excerpt,
       "slug": slug.current,
       "imageUrl": mainImage.asset->url,
+      pinterestUrl,
       products[] { name, url, note }
     }`;
 
@@ -134,80 +135,119 @@ mountLatestPosts();
   }
 
   // ========================================
-  // Room Feed (Full-page stacked posts)
-  // ========================================
-  function renderRoomFullPost(post) {
-    const products = (post.products || [])
-      .map(
-        (p) => `
-      <div class="product-card">
-        <div class="product-info">
-          <div class="product-name">${p.name}</div>
-          ${p.note ? `<div class="product-note">${p.note}</div>` : ""}
-        </div>
-        <a class="btn btn-primary" href="${p.url}" target="_blank" rel="noopener sponsored">Shop</a>
-      </div>
+// Room Feed (Full-page stacked posts)
+// ========================================
+function renderRoomFullPost(post) {
+  // Build affiliate list (simple rows with chevron)
+  const affiliateRows = (post.products || [])
+    .map((p) => {
+      const safeName = p.name || "";
+      const safeUrl = p.url || "#";
+      const safeNote = p.note || "";
+
+      return `
+        <li class="affiliate-item">
+          <a class="affiliate-link" href="${safeUrl}" target="_blank" rel="noopener sponsored">
+            <span class="affiliate-left">
+              <span class="affiliate-name">${safeName}</span>
+              ${safeNote ? `<span class="affiliate-note">${safeNote}</span>` : ""}
+            </span>
+            <span class="affiliate-chevron" aria-hidden="true">›</span>
+          </a>
+        </li>
+      `;
+    })
+    .join("");
+
+  const productsBlock = affiliateRows
+    ? `
+      <section class="product-section">
+        <h2 class="section-title">Recreate this look</h2>
+        <p class="muted">Affiliate links below — we may earn a small commission at no extra cost to you.</p>
+        <ul class="affiliate-list">
+          ${affiliateRows}
+        </ul>
+      </section>
     `
+    : "";
+
+  const hasImage = !!post.imageUrl;
+  const hasPinterest = !!post.pinterestUrl;
+
+  // Pinterest overlay image (top-right) stored at assets/pinterest.webp
+  const pinOverlay = `
+    <span class="pin-badge" aria-hidden="true" title="View on Pinterest">
+      <img src="assets/pinterest.webp" alt="" class="pin-badge-img" loading="lazy" decoding="async">
+    </span>
+  `;
+
+  const imgInner = hasImage
+    ? `
+      <img src="${post.imageUrl}" alt="${post.title}">
+      ${pinOverlay}
+    `
+    : "";
+
+  const imageBlock = hasImage
+    ? (hasPinterest
+        ? `<a class="post-hero-image pin-link" href="${post.pinterestUrl}" target="_blank" rel="noopener noreferrer">${imgInner}</a>`
+        : `<div class="post-hero-image">${imgInner}</div>`
       )
-      .join("");
+    : "";
 
-    const productsBlock = products
-      ? `
-        <section class="product-section">
-          <h2 class="section-title">Recreate this look</h2>
-          <p class="muted">Affiliate links below — we may earn a small commission at no extra cost to you.</p>
-          <div class="product-grid">${products}</div>
-        </section>
-      `
-      : "";
-
-    return `
-      <article class="room-post" id="${post.slug ? String(post.slug) : ""}">
-        <header class="post-hero">
-          <div class="post-hero-meta">
-            <span class="room-tag">${roomLabel(post.room)}</span>
-            <span class="post-date">${formatDate(post.publishedAt)}</span>
-          </div>
-          <h2 class="post-title">${post.title}</h2>
-          ${post.excerpt ? `<p class="post-intro">${post.excerpt}</p>` : ""}
-        </header>
-
-        <div class="post-hero-image">
-          <img src="${post.imageUrl}" alt="${post.title}">
+  return `
+    <article class="room-post" id="${post.slug ? String(post.slug) : ""}">
+      <header class="post-hero">
+        <div class="post-hero-meta">
+          <span class="room-tag">${roomLabel(post.room)}</span>
+          <span class="post-date">${formatDate(post.publishedAt)}</span>
         </div>
+        <h2 class="post-title">${post.title}</h2>
+        ${post.excerpt ? `<p class="post-intro">${post.excerpt}</p>` : ""}
+      </header>
 
-        <div class="post-divider"></div>
+      ${imageBlock}
 
-        ${productsBlock}
-      </article>
-    `;
-  }
+      <div class="post-divider"></div>
 
-  async function mountRoomFeedPage() {
-    const root = document.getElementById("roomFeed");
-    if (!root) return;
+      ${productsBlock}
+    </article>
+  `;
+}
+async function mountRoomFeedPage() {
+  const root = document.getElementById("roomFeed");
+  if (!root) return;
 
-    const room = getParam("room") || "";
-    const titleEl = document.getElementById("roomTitle");
-    if (titleEl) titleEl.textContent = roomLabel(room);
+  const room = getParam("room") || "";
+  const titleEl = document.getElementById("roomTitle");
+  if (titleEl) titleEl.textContent = roomLabel(room);
 
-    root.innerHTML = `<p style="text-align:center;opacity:.7;">Loading posts…</p>`;
+  root.innerHTML = `<p style="text-align:center;opacity:.7;">Loading posts…</p>`;
 
-    try {
-      const posts = await fetchPostsByRoom(room, 50);
-      if (!posts.length) {
-        root.innerHTML = `<p style="text-align:center;opacity:.7;">No posts yet for this room.</p>`;
-        return;
-      }
-      root.innerHTML = posts.map(renderRoomFullPost).join("");
-    } catch (err) {
-      console.error(err);
-      root.innerHTML = `<p style="text-align:center;opacity:.7;">Couldn’t load posts.</p>`;
+  try {
+    const posts = await fetchPostsByRoom(room, 50);
+    if (!posts.length) {
+      root.innerHTML = `<p style="text-align:center;opacity:.7;">No posts yet for this room.</p>`;
+      return;
     }
-  }
 
-  // Mount room feed after functions exist
-  mountRoomFeedPage();
+    root.innerHTML = posts.map(renderRoomFullPost).join("");
+
+    // Optional: if you open via #slug, scroll to it nicely after render
+    if (window.location.hash) {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      const target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  } catch (err) {
+    console.error(err);
+    root.innerHTML = `<p style="text-align:center;opacity:.7;">Couldn’t load posts.</p>`;
+  }
+}
+
+// ✅ Run it (safe because it exits if #roomFeed isn’t on the page)
+mountRoomFeedPage();
+
 
   // ========================================
   // Room Cards - Coming Soon Toast
