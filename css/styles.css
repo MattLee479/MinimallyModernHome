@@ -841,6 +841,16 @@ body.room-page .section {
   margin: 26px auto;
 }
 
+@media (max-width: 768px) {
+  .room-feed {
+    gap: calc(56px / 6);
+  }
+
+  .room-post {
+    width: min(980px, calc(100% - 8px));
+  }
+}
+
 /* ========================================
    TRUST BLOCK
    ======================================== */
@@ -885,6 +895,14 @@ body.room-page .section {
   gap: var(--space-md);
 }
 
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -918,6 +936,13 @@ body.room-page .section {
 
 .form-group textarea {
   resize: none;
+}
+
+.form-status {
+  min-height: 1.25em;
+  margin: 0;
+  font-size: 0.875rem;
+  color: #b23a3a;
 }
 
 .success-message {

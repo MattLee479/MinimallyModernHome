@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="icon" href="/assets/house.ico">
+  <link rel="icon" href="/assets/house.ico">
+</head>
 <body>
   <!-- Header -->
   <header class="header">
@@ -48,7 +49,21 @@
             <p>Have a question or just want to say hello? We'd love to hear from you.</p>
           </div>
 
-          <form class="contact-form animate-fade-in" id="contactForm">
+          <form
+            class="contact-form animate-fade-in"
+            id="contactForm"
+            action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="New message from Minimally Modern Home contact form">
+            <input
+              type="text"
+              name="_gotcha"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+              class="hp-field"
+            >
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" name="name" required>
@@ -62,6 +77,7 @@
               <textarea id="message" name="message" rows="6" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
 
           <div class="success-message animate-fade-in" id="successMessage" style="display: none;">
@@ -102,7 +118,7 @@
       <div class="footer-connect">
         <h5>Connect With Me</h5>
         <div class="social-buttons">
-          <a href="https://" target="_blank" rel="noopener noreferrer" class="social-btn pinterest">
+          <a href="https://uk.pinterest.com/minimallymodern/" target="_blank" rel="noopener noreferrer" class="social-btn pinterest">
             View My Pinterest
           </a>
         </div>
@@ -127,12 +143,6 @@
     </div>
   </div>
 </footer>
-
-  <!-- Toast Notification -->
-  <div class="toast" id="toast">
-    <p class="toast-title">Coming Soon</p>
-    <p class="toast-message"></p>
-  </div>
 
   <script src="js/main.js"></script>
 </body>

@@ -291,14 +291,57 @@ mountRoomFeedPage();
   // ========================================
   const contactForm = document.getElementById("contactForm");
   const successMessage = document.getElementById("successMessage");
+  const formStatus = document.getElementById("formStatus");
 
   if (contactForm && successMessage) {
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      // In a real implementation, this would send to a backend
-      contactForm.style.display = "none";
-      successMessage.style.display = "block";
+      const endpoint = contactForm.getAttribute("action") || "";
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.textContent : "";
+
+      if (formStatus) formStatus.textContent = "";
+
+      if (!endpoint || endpoint.includes("REPLACE_WITH_FORM_ID")) {
+        if (formStatus) {
+          formStatus.textContent = "Form is not configured yet. Add your Formspree form ID in contact.html.";
+        }
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+      }
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: new FormData(contactForm),
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Formspree submit failed: ${response.status}`);
+        }
+
+        contactForm.reset();
+        contactForm.style.display = "none";
+        successMessage.style.display = "block";
+      } catch (err) {
+        console.error(err);
+        if (formStatus) {
+          formStatus.textContent = "Sorry, message failed to send. Please try again.";
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText || "Send Message";
+        }
+      }
     });
   }
 
