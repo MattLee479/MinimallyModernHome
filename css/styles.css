@@ -303,6 +303,14 @@ p {
   margin: 0 auto;
 }
 
+.ai-note {
+  margin-top: var(--space-xs);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-charcoal);
+  opacity: 0.7;
+}
+
 /* ========================================
    HEADER
    ======================================== */
@@ -602,6 +610,18 @@ p {
   gap: var(--space-lg);
 }
 
+.posts-grid--tiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+@media (min-width: 769px) {
+  .posts-grid--tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+}
+
 @media (min-width: 640px) {
   .posts-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -686,6 +706,33 @@ p {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Latest Inspiration tiles (mobile-only via JS toggle) */
+.latest-tile {
+  display: block;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-linen);
+}
+
+.latest-tile-image {
+  display: block;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.latest-tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.latest-tile:hover .latest-tile-image img {
+  transform: scale(1.03);
 }
 
 /* Room Cards */

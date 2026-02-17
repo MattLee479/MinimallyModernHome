@@ -66,13 +66,33 @@ async function fetchLatestPosts(limit = 3) {
     publishedAt,
     excerpt,
     "slug": slug.current,
-    "imageUrl": mainImage.asset->url
+    "imageUrl": mainImage.asset->url,
+    pinterestUrl
   }`;
 
   const res = await fetch(sanityQueryUrl(groq));
   if (!res.ok) throw new Error(`Sanity fetch failed: ${res.status}`);
   const data = await res.json();
   return data.result || [];
+}
+
+function renderLatestPostTile(post, index) {
+  const delay = (index * 0.06).toFixed(2);
+  const href = post.pinterestUrl || "#";
+  const pinOverlay = `
+    <span class="pin-badge" aria-hidden="true" title="View on Pinterest">
+      <img src="assets/pinterest.webp" alt="" class="pin-badge-img" loading="lazy" decoding="async">
+    </span>
+  `;
+
+  return `
+    <a class="latest-tile animate-fade-in" style="animation-delay:${delay}s;" href="${href}" aria-label="Open ${post.title} on Pinterest" target="_blank" rel="noopener noreferrer">
+      <span class="latest-tile-image">
+        <img src="${post.imageUrl}" alt="${post.title}">
+        ${pinOverlay}
+      </span>
+    </a>
+  `;
 }
 
 function renderLatestPostCard(post, index) {
@@ -107,12 +127,27 @@ async function mountLatestPosts() {
   grid.innerHTML = `<p style="opacity:.7;">Loading…</p>`;
 
   try {
-    const posts = await fetchLatestPosts(3);
+    const posts = await fetchLatestPosts(4);
     if (!posts.length) {
       grid.innerHTML = `<p style="opacity:.7;">No posts yet.</p>`;
       return;
     }
-    grid.innerHTML = posts.map(renderLatestPostCard).join("");
+
+    const mq = window.matchMedia("(max-width: 768px)");
+    grid.classList.add("posts-grid--tiles");
+
+    const render = () => {
+      const isMobile = mq.matches;
+      const count = isMobile ? 4 : 3;
+      grid.innerHTML = posts.slice(0, count).map(renderLatestPostTile).join("");
+    };
+
+    render();
+    if (mq.addEventListener) {
+      mq.addEventListener("change", render);
+    } else if (mq.addListener) {
+      mq.addListener(render);
+    }
   } catch (err) {
     console.error(err);
     grid.innerHTML = `<p style="opacity:.7;">Couldn’t load posts.</p>`;
